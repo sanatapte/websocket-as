@@ -8,27 +8,27 @@ h2. Example usage
 
 bc.. import y8.net.WebSocket;
 
-var web:WebSocket = new WebSocket();
+var ws:WebSocket = new WebSocket();
 
-web.addEventListener("open", function():void {
+ws.addEventListener("open", function():void {
   trace("Connection opened");
-  web.send("Hello from flash!");
-  web.close();
+  ws.send("Hello from flash!");
+  ws.close();
 });
 
-web.addEventListener("close", function():void {
+ws.addEventListener("close", function():void {
   trace("Connection closed");
 });
 
-web.addEventListener("message", function(event:*):void {
+ws.addEventListener("message", function(event:*):void {
   trace("Message: ", event.data);
 });
 
-web.addEventListener("error", function(event:*):void {
+ws.addEventListener("error", function(event:*):void {
   trace("Error: ", event.error);
 });
 
-web.open("ws://socket.example.com/path", "http://myapp.example.com");
+ws.open("ws://socket.example.com/path", "http://myapp.example.com");
 
 h2. Note on Patches/Pull Requests
 

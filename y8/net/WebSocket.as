@@ -164,7 +164,11 @@ package y8.net {
          */
         public function close():void {
             this.state = CLOSE;
-            this.socket.close();
+            try {
+                this.socket.close();
+            } catch(error:Error) {
+                dispatchError(error.message);
+            }
         }
 
         /**
@@ -250,7 +254,7 @@ package y8.net {
                 //Cheking response status
                 if(status != "HTTP/1.1 101 Web Socket Protocol Handshake") {
                     dispatchError("Wrong WebSocket handshake respons status: " + status);
-                    this.socket.close();
+                    try { this.socket.close(); } catch(error:Error) {};
                 }
 
                 //Parsing headers
@@ -259,13 +263,13 @@ package y8.net {
                 //Checking websocket-origin to match origin
                 if(headers['websocket-origin'].toLowerCase() != this.origin.toLowerCase()) {
                     dispatchError("Websocket-Origin mismatch. Expected: " + this.origin + ", got: " + headers['websocket-origin']);
-                    this.socket.close();
+                    try { this.socket.close(); } catch(error:Error) {};
                 }
 
                 //Checking websocket-location to match location
                 if(headers['websocket-location'] != this.location) {
                     dispatchError("WebSocket-Location mismatch. Expected: " + this.location + ", got: " + headers['websocket-location']);
-                    this.socket.close();
+                    try { this.socket.close(); } catch(error:Error) {};
                 }
 
                 //Connection established.
@@ -307,19 +311,19 @@ package y8.net {
          */
         private function processData():void {
             while (this.socket.bytesAvailable) {
-                var byte:uint = socket.readUnsignedByte();
+                var byte:uint = this.socket.readUnsignedByte();
 
                 if(byte == 0x00) {
                     if(this.reading) {
                         dispatchError("Unexpected data frame begin mark while reading");
-                        this.socket.close();
+                        try { this.socket.close(); } catch(error:Error) {};
                     }
                     this.frame.length = 0;
                     this.reading = true;
                 } else if (byte == 0xFF) {
                     if(!this.reading) {
                         dispatchError("Data frame must strart with begin mark, but got end mark");
-                        this.socket.close();
+                        try { this.socket.close(); } catch(error:Error) {};
                     }
                     this.frame.position = 0;
                     super.dispatchEvent(new WebSocketEvent(WebSocketEvent.MESSAGE, false, false, this.frame.readUTFBytes(frame.length)));
@@ -329,7 +333,7 @@ package y8.net {
                         this.frame.writeByte(byte);
                     } else {
                         dispatchError("Data frame must starts with begin mark.");
-                        this.socket.close();
+                        try { this.socket.close(); } catch(error:Error) {};
                     }
                 }
             }
