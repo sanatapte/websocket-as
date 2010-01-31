@@ -1,0 +1,47 @@
+h1. WebSocket ActionScript Client
+
+Clean and simple WebSocket client. 
+
+Requires "as3corelib":http://code.google.com/p/as3corelib/ com.adobe.net.URI class.
+
+h2. Example usage
+
+bc.. import y8.net.WebSocket;
+
+var web:WebSocket = new WebSocket();
+
+web.addEventListener("open", function():void {
+  trace("Connection opened");
+  web.send("Hello from flash!");
+  web.close();
+});
+
+web.addEventListener("close", function():void {
+  trace("Connection closed");
+});
+
+web.addEventListener("message", function(event:*):void {
+  trace("Message: ", event.data);
+});
+
+web.addEventListener("error", function(event:*):void {
+  trace("Error: ", event.error);
+});
+
+web.open("ws://socket.example.com/path", "http://myapp.example.com");
+
+h2. Note on Patches/Pull Requests
+
+* Fork the project.
+* Make your feature addition or bug fix.
+* Add tests for it. This is important so I don’t break it in a future version unintentionally.
+* Commit, do not mess with rakefile, version, or history. (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
+* Send me a pull request. Bonus points for topic branches.
+
+h2. License
+
+websocket-as licensed under Ruby License. See LICENSE for details.
+
+h2. Copyright
+
+© Alexey Y. Bondar (y8@ya.ru), 2010.
