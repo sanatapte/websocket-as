@@ -4,7 +4,7 @@ Clean and simple WebSocket client.
 
 Requires "as3corelib":http://code.google.com/p/as3corelib/ com.adobe.net.URI class.
 
-h2. Example usage
+h2. Usage example
 
 bc.. import y8.net.WebSocket;
 
