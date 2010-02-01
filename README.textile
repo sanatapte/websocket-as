@@ -6,6 +6,12 @@ Requires "as3corelib":http://code.google.com/p/as3corelib/ com.adobe.net.URI cla
 
 h2. Usage example
 
+Clone from repo:
+@git clone http://github.com/y8/websocket-as y8@
+
+Or use as submodule:
+@git submodule add http://github.com/y8/websocket-as y8@
+
 bc.. import y8.net.WebSocket;
 
 var ws:WebSocket = new WebSocket();
